@@ -6,60 +6,59 @@ class Bottles
 
   def verses(first_num, last_num)
     output = ''.dup
-    first_num.downto(last_num).each do |verse_num|
-      output << verse(verse_num)
-      output << "\n" if verse_num > last_num
+    first_num.downto(last_num).each do |number|
+      output << verse(number)
+      output << "\n" if number > last_num
     end
     output
   end
 
-  def verse(verse_num)
-    if verse_num < 1
-      final_verse
-    else
-      standard_verse(verse_num)
-    end
+  def verse(number)
+    "#{initial_quantity(number)} #{container(number)} of beer on the wall, " +
+    "#{quantity(number)} #{container(number)} of beer.\n" +
+    "#{action(number)}, " +
+    "#{quantity(number - 1) } #{container(number - 1)} of beer on the wall.\n"
   end
 
   private
 
-  def standard_verse(verse_num)
-    "#{quantity(verse_num)} #{container(verse_num)} of beer on the wall, " +
-    "#{quantity(verse_num)} #{container(verse_num)} of beer.\n" +
-    "Take #{subject(verse_num)} down and pass it around, " +
-    "#{quantity(verse_num - 1) } #{container(verse_num - 1)} of beer on the wall.\n"
+  def initial_quantity(number)
+    if number == 0
+      'No more'
+    elsif number < 0
+      99
+    else
+      number
+    end
   end
 
-  def final_verse
-    'No more bottles of beer on the wall, ' +
-    "no more bottles of beer.\n" +
-    'Go to the store and buy some more, ' +
-    "99 bottles of beer on the wall.\n"
+  def action(number)
+    case number
+    when 0
+      'Go to the store and buy some more'
+    when 1
+      'Take it down and pass it around'
+    else
+      'Take one down and pass it around'
+    end
   end
 
-  def container(verse_num)
-    if verse_num == 1
+  def container(number)
+    if number == 1
       'bottle'
     else
       'bottles'
     end
   end
 
-  def subject(verse_num)
-    case verse_num
-    when 1
-      'it'
-    else
-      'one'
-    end
-  end
 
-  def quantity(verse_num)
-    case verse_num
-    when 0
+  def quantity(number)
+    if number == 0
       'no more'
+    elsif number < 0
+      99
     else
-      verse_num
+      number
     end
   end
 end
