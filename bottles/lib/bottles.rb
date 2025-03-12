@@ -14,7 +14,8 @@ class Bottles
   end
 
   def verse(number)
-    "#{initial_quantity(number)} #{container(number)} of beer on the wall, " +
+    puts
+    "#{quantity(number).capitalize} #{container(number)} of beer on the wall, " +
     "#{quantity(number)} #{container(number)} of beer.\n" +
     "#{action(number)}, " +
     "#{quantity(number - 1) } #{container(number - 1)} of beer on the wall.\n"
@@ -22,13 +23,13 @@ class Bottles
 
   private
 
-  def initial_quantity(number)
+  def quantity(number)
     if number == 0
-      'No more'
+      'no more'
     elsif number < 0
-      99
+      99.to_s
     else
-      number
+      number.to_s
     end
   end
 
@@ -36,10 +37,17 @@ class Bottles
     case number
     when 0
       'Go to the store and buy some more'
-    when 1
-      'Take it down and pass it around'
     else
-      'Take one down and pass it around'
+      "Take #{pronoun(number)} down and pass it around"
+    end
+  end
+
+  def pronoun(number)
+    case number
+    when 1
+      'it'
+    else
+      'one'
     end
   end
 
@@ -48,17 +56,6 @@ class Bottles
       'bottle'
     else
       'bottles'
-    end
-  end
-
-
-  def quantity(number)
-    if number == 0
-      'no more'
-    elsif number < 0
-      99
-    else
-      number
     end
   end
 end
